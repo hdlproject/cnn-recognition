@@ -12,10 +12,15 @@ class VideoReader(object):
         self.exit()
 
     def exit(self):
-        print("release")
         self.vid.release()
+        cv2.destroyAllWindows()
+
+    @staticmethod
+    def exit_condition():
+        return cv2.waitKey(1) & 0xFF == ord('q')
 
     def read(self):
-        while (True):
+        while True:
             ret, frame = self.vid.read()
+            cv2.imshow('frame', frame)
             yield ret, frame
